@@ -120,6 +120,18 @@ npm run preview
 
 This repository should not include sensitive, private, or confidential data.
 
+Do not upload:
+
+```text
+.env
+API keys
+passwords
+private datasets
+sensitive health data
+node_modules/
+dist/
+```
+
 ## Repository Status
 
 Initial public version.
