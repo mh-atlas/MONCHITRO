@@ -16,9 +16,6 @@ export type TabKey = 'map' | 'insights' | 'table' | 'report';
 const TAB_WIDTH = 92;
 const TAB_GAP = 4;
 
-const DASHBOARD_VERSION = 'v1.0';
-const DATA_LAST_UPDATED = '12 Jun 2026';
-
 const NAV_TABS = [
   { key: 'map' as TabKey, label: 'Map', icon: Map },
   { key: 'insights' as TabKey, label: 'Insights', icon: BarChart3 },
@@ -112,11 +109,7 @@ export default function AppHeader({
           </h1>
 
           <p className="hidden truncate text-[11px] text-muted-foreground sm:block md:text-xs">
-            Bangladesh mental health facility dashboard
-          </p>
-
-          <p className="hidden text-[10px] text-muted-foreground/80 lg:block">
-            {DASHBOARD_VERSION} · Data updated {DATA_LAST_UPDATED}
+            Interactive mental health service mapping for Bangladesh
           </p>
         </div>
 
