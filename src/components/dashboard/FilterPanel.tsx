@@ -88,7 +88,7 @@ export default function FilterPanel({
       updateFilter('districts', nextDistricts);
     } else {
       const nextDivs = filters.divisions.filter((d) => d !== divCode);
-      // keep districts that are in another still-selected division OR not in this division at all
+      // Keep districts that are in another still-selected division OR not in this division at all
       const otherDivDistricts = new Set<string>();
       nextDivs.forEach((dc) => divToDistricts.get(dc)?.forEach((x) => otherDivDistricts.add(x)));
       const nextDistricts = filters.districts.filter(
@@ -158,7 +158,6 @@ export default function FilterPanel({
 
   return (
     <div className="h-full flex flex-col min-h-0 bg-background">
-
       {/* Scrollable filter content */}
       <div className="flex-1 min-h-0 overflow-y-auto px-3.5 pt-3.5 pb-3">
         {/* Header row */}
@@ -209,6 +208,7 @@ export default function FilterPanel({
             <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
           )}
         </button>
+
         {divisionOpen && (
           <div className="mt-1.5 p-2 rounded-[10px] bg-card border border-border">
             <div className="max-h-44 overflow-y-auto space-y-0.5 pr-1">
@@ -257,6 +257,7 @@ export default function FilterPanel({
             <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0" />
           )}
         </button>
+
         {districtOpen && (
           <div className="mt-1.5 p-2 rounded-[10px] bg-card border border-border">
             <Input
@@ -334,7 +335,9 @@ export default function FilterPanel({
             <SelectValue placeholder="All types" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all" className="text-[12px]">All types</SelectItem>
+            <SelectItem value="all" className="text-[12px]">
+              All types
+            </SelectItem>
             {filterOptions.facilityTypes.map((t) => (
               <SelectItem key={t} value={t} className="text-[12px]">
                 {t}
@@ -355,6 +358,7 @@ export default function FilterPanel({
             />
             <span>Free services only</span>
           </label>
+
           <label className="flex items-center gap-2 py-1 px-1 rounded hover:bg-muted/40 cursor-pointer text-[12px] text-foreground">
             <Checkbox
               checked={apptChecked}
@@ -366,6 +370,7 @@ export default function FilterPanel({
             />
             <span>Appointment required</span>
           </label>
+
           <label className="flex items-center gap-2 py-1 px-1 rounded hover:bg-muted/40 cursor-pointer text-[12px] text-foreground">
             <Checkbox
               checked={walkInChecked}
@@ -380,22 +385,10 @@ export default function FilterPanel({
         </div>
       </div>
 
-      {/* Footer — flex-shrink-0 keeps it pinned at the bottom of the panel,
-          always visible at the same level as the map's bottom edge */}
-      <div className="flex-shrink-0 px-3.5 pt-2 pb-8 border-t border-border space-y-2.5 bg-background">
+      {/* Footer for active filter chips */}
+      <div className="flex-shrink-0 px-3.5 pt-2 pb-3 border-t border-border space-y-2.5 bg-background">
         {chipsSlot}
-        <div className="text-center">
-          <a
-            href="https://hasibulahmedpulok.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block text-[11px] font-medium text-foreground hover:text-primary transition-colors"
-          >
-            Developed by Hasibul Ahmed Pulok
-          </a>
-        </div>
       </div>
-
     </div>
   );
 }
