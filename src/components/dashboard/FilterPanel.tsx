@@ -12,6 +12,9 @@ import {
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import FacilitySearch from './FacilitySearch';
 
+const DASHBOARD_VERSION = 'v1.0';
+const DATA_LAST_UPDATED = '12 Jun 2026';
+
 interface FilterPanelProps {
   filters: Filters;
   updateFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
@@ -71,29 +74,39 @@ export default function FilterPanel({
   // Build DIV_CODE → Set<DIS_CODE> from facilities (each facility carries both codes)
   const divToDistricts = useMemo(() => {
     const m = new Map<string, Set<string>>();
+
     facilities.forEach((f) => {
       if (!f.DIV_CODE || !f.DIS_CODE) return;
+
       if (!m.has(f.DIV_CODE)) m.set(f.DIV_CODE, new Set());
+
       m.get(f.DIV_CODE)!.add(f.DIS_CODE);
     });
+
     return m;
   }, [facilities]);
 
   const toggleDivision = (divCode: string, on: boolean) => {
     const districtsInDiv = Array.from(divToDistricts.get(divCode) || []);
+
     if (on) {
       const nextDivs = [...new Set([...filters.divisions, divCode])];
       const nextDistricts = [...new Set([...filters.districts, ...districtsInDiv])];
+
       updateFilter('divisions', nextDivs);
       updateFilter('districts', nextDistricts);
     } else {
       const nextDivs = filters.divisions.filter((d) => d !== divCode);
+
       // Keep districts that are in another still-selected division OR not in this division at all
       const otherDivDistricts = new Set<string>();
+
       nextDivs.forEach((dc) => divToDistricts.get(dc)?.forEach((x) => otherDivDistricts.add(x)));
+
       const nextDistricts = filters.districts.filter(
         (dc) => !districtsInDiv.includes(dc) || otherDivDistricts.has(dc)
       );
+
       updateFilter('divisions', nextDivs);
       updateFilter('districts', nextDistricts);
     }
@@ -104,6 +117,7 @@ export default function FilterPanel({
   );
 
   const selectedDistrictCount = selectedDistrict ? 1 : filters.districts.length;
+
   const districtSubtitle =
     selectedDistrictCount === 0
       ? null
@@ -133,10 +147,12 @@ export default function FilterPanel({
     () => matchOption(filterOptions.cost, ['free']),
     [filterOptions.cost]
   );
+
   const apptYesOption = useMemo(
     () => matchOption(filterOptions.appointmentRequired, ['yes', 'required']),
     [filterOptions.appointmentRequired]
   );
+
   const apptNoOption = useMemo(
     () => matchOption(filterOptions.appointmentRequired, ['no', 'walk', 'not']),
     [filterOptions.appointmentRequired]
@@ -153,6 +169,7 @@ export default function FilterPanel({
   ) => {
     const cur = filters[key] as string[];
     const next = on ? [...new Set([...cur, value])] : cur.filter((v) => v !== value);
+
     updateFilter(key, next as any);
   };
 
@@ -163,6 +180,7 @@ export default function FilterPanel({
         {/* Header row */}
         <div className="flex items-center justify-between mb-3">
           <span className="text-[13px] font-medium text-foreground">Filters</span>
+
           <button
             type="button"
             onClick={resetFilters}
@@ -181,6 +199,7 @@ export default function FilterPanel({
             districtNameLookup={districtNameLookup}
             onSelectFacility={(f) => {
               updateFilter('searchQuery', f.facility_name);
+
               if (f.DIS_CODE) setSelectedDistrict(f.DIS_CODE);
             }}
           />
@@ -188,6 +207,7 @@ export default function FilterPanel({
 
         {/* DIVISION */}
         <SectionLabel>Division</SectionLabel>
+
         <button
           type="button"
           onClick={() => setDivisionOpen((o) => !o)}
@@ -196,12 +216,14 @@ export default function FilterPanel({
         >
           <div className="flex flex-col items-start min-w-0">
             <span className="text-[12px] font-medium text-foreground">Division</span>
+
             {filters.divisions.length > 0 && (
               <span className="text-[11px] text-muted-foreground truncate max-w-[200px]">
                 {filters.divisions.length} selected
               </span>
             )}
           </div>
+
           {divisionOpen ? (
             <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" />
           ) : (
@@ -223,9 +245,11 @@ export default function FilterPanel({
                     className="h-3.5 w-3.5"
                     aria-label={`Toggle division ${dv.name}`}
                   />
+
                   <span className="truncate">{dv.name}</span>
                 </label>
               ))}
+
               {filterOptions.divisions.length === 0 && (
                 <div className="text-[11px] text-muted-foreground py-2 text-center">
                   No divisions available
@@ -237,6 +261,7 @@ export default function FilterPanel({
 
         {/* DISTRICT */}
         <SectionLabel>District</SectionLabel>
+
         <button
           type="button"
           onClick={() => setDistrictOpen((o) => !o)}
@@ -245,12 +270,14 @@ export default function FilterPanel({
         >
           <div className="flex flex-col items-start min-w-0">
             <span className="text-[12px] font-medium text-foreground">District</span>
+
             {districtSubtitle && (
               <span className="text-[11px] text-muted-foreground truncate max-w-[200px]">
                 {districtSubtitle}
               </span>
             )}
           </div>
+
           {districtOpen ? (
             <ChevronDown className="h-4 w-4 text-muted-foreground shrink-0" />
           ) : (
@@ -266,6 +293,7 @@ export default function FilterPanel({
               onChange={(e) => setDistrictSearch(e.target.value)}
               className="h-7 text-[11px] bg-secondary border-0 mb-1.5"
             />
+
             <div className="max-h-44 overflow-y-auto space-y-0.5 pr-1">
               {filteredDistricts.map((d) => (
                 <label
@@ -278,14 +306,18 @@ export default function FilterPanel({
                       const next = checked
                         ? [...filters.districts, d.code]
                         : filters.districts.filter((c) => c !== d.code);
+
                       updateFilter('districts', next);
+
                       if (!checked && selectedDistrict === d.code) setSelectedDistrict(null);
                     }}
                     className="h-3.5 w-3.5"
                   />
+
                   <span className="truncate">{d.name}</span>
                 </label>
               ))}
+
               {filteredDistricts.length === 0 && (
                 <div className="text-[11px] text-muted-foreground py-2 text-center">
                   No districts found
@@ -303,6 +335,7 @@ export default function FilterPanel({
           <div className="flex flex-wrap gap-1.5 mb-2">
             {ownershipChips.map((chip) => {
               const active = chip.value ? filters.ownership.includes(chip.value) : false;
+
               return (
                 <button
                   key={chip.label}
@@ -334,10 +367,12 @@ export default function FilterPanel({
           <SelectTrigger className="h-9 text-[12px] bg-card border-border rounded-[10px]">
             <SelectValue placeholder="All types" />
           </SelectTrigger>
+
           <SelectContent>
             <SelectItem value="all" className="text-[12px]">
               All types
             </SelectItem>
+
             {filterOptions.facilityTypes.map((t) => (
               <SelectItem key={t} value={t} className="text-[12px]">
                 {t}
@@ -348,6 +383,7 @@ export default function FilterPanel({
 
         {/* ACCESS */}
         <SectionLabel>Access</SectionLabel>
+
         <div className="space-y-1.5">
           <label className="flex items-center gap-2 py-1 px-1 rounded hover:bg-muted/40 cursor-pointer text-[12px] text-foreground">
             <Checkbox
@@ -356,6 +392,7 @@ export default function FilterPanel({
               onCheckedChange={(c) => freeOption && toggleArrayValue('cost', freeOption, !!c)}
               className="h-4 w-4"
             />
+
             <span>Free services only</span>
           </label>
 
@@ -368,6 +405,7 @@ export default function FilterPanel({
               }
               className="h-4 w-4"
             />
+
             <span>Appointment required</span>
           </label>
 
@@ -380,14 +418,21 @@ export default function FilterPanel({
               }
               className="h-4 w-4"
             />
+
             <span>Walk-in available</span>
           </label>
         </div>
       </div>
 
-      {/* Footer for active filter chips */}
-      <div className="flex-shrink-0 px-3.5 pt-2 pb-3 border-t border-border space-y-2.5 bg-background">
+      {/* Footer for active filter chips and version information */}
+      <div className="flex-shrink-0 px-3.5 pt-2 pb-4 border-t border-border space-y-2.5 bg-background">
         {chipsSlot}
+
+        <div className="text-center">
+          <span className="inline-block text-[10px] font-normal text-muted-foreground/70">
+            {DASHBOARD_VERSION} · Data updated {DATA_LAST_UPDATED}
+          </span>
+        </div>
       </div>
     </div>
   );
