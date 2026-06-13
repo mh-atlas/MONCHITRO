@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useDataLoader } from '@/hooks/useDataLoader';
 import { useFilters } from '@/hooks/useFilters';
 import type { TabView } from '@/types/dashboard';
@@ -11,24 +11,89 @@ import DataTable from '@/components/dashboard/DataTable';
 import DistrictSummaryCards from '@/components/dashboard/DistrictSummaryCards';
 import ReportTab from '@/components/dashboard/ReportTab';
 import ActiveFilterChips from '@/components/dashboard/ActiveFilterChips';
-import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { AlertTriangle, RefreshCw, Info, Database, ShieldAlert } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LoadingScreen from '@/components/LoadingScreen';
 import AppHeader from '@/components/dashboard/AppHeader';
 
 const VALID_TABS: TabView[] = ['map', 'insights', 'table', 'report'];
 
+function DashboardNotice() {
+  return (
+    <section
+      aria-label="Dashboard data notice"
+      className="rounded-2xl border border-amber-200 bg-amber-50/80 px-4 py-3 text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/25 dark:text-amber-100"
+    >
+      <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+        <div className="flex gap-2">
+          <ShieldAlert className="mt-0.5 h-4 w-4 flex-shrink-0" aria-hidden="true" />
+          <div>
+            <p className="text-sm font-semibold">Directory-derived planning dataset</p>
+            <p className="mt-1 text-xs leading-relaxed">
+              This dashboard visualizes 371 indexed facilities from a service directory. It is not
+              a verified national census. Districts with zero indexed facilities may represent true
+              service gaps, directory coverage gaps, or both.
+            </p>
+          </div>
+        </div>
+
+        <Link
+          to="/data-methods"
+          className="inline-flex items-center justify-center rounded-lg border border-amber-300 bg-white/50 px-3 py-1.5 text-xs font-medium text-amber-950 transition-colors hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100"
+        >
+          <Info className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
+          Data & Methods
+        </Link>
+      </div>
+    </section>
+  );
+}
+
+function NoDataState({
+  resetFilters,
+  message,
+}: {
+  resetFilters: () => void;
+  message: string;
+}) {
+  return (
+    <div className="dashboard-panel p-10 text-center">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
+        <Database className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
+      </div>
+      <h2 className="text-base font-semibold text-foreground">No matching data</h2>
+      <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{message}</p>
+      <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
+        <Button size="sm" onClick={resetFilters}>
+          Reset filters
+        </Button>
+        <Button size="sm" variant="outline" asChild>
+          <Link to="/data-methods">Read data limitations</Link>
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 export default function Index() {
   const { districts, facilities, geojson, loading, error, reload } = useDataLoader();
+
   const {
-    filters, updateFilter, resetFilters,
-    mapDisplay, updateMapDisplay,
-    selectedDistrict, setSelectedDistrict,
-    activeDistricts, activeFacilities, filterOptions,
+    filters,
+    updateFilter,
+    resetFilters,
+    mapDisplay,
+    updateMapDisplay,
+    selectedDistrict,
+    setSelectedDistrict,
+    activeDistricts,
+    activeFacilities,
+    filterOptions,
   } = useFilters(districts, facilities);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const initialTab = (searchParams.get('tab') as TabView) || 'map';
+
   const [activeTab, setActiveTab] = useState<TabView>(
     VALID_TABS.includes(initialTab) ? initialTab : 'map'
   );
@@ -41,6 +106,7 @@ export default function Index() {
       setIsMobile(mobile);
       if (mobile) setSidebarOpen(false);
     };
+
     check();
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
@@ -48,8 +114,10 @@ export default function Index() {
 
   useEffect(() => {
     const next = new URLSearchParams(searchParams);
+
     if (activeTab === 'map') next.delete('tab');
     else next.set('tab', activeTab);
+
     setSearchParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab]);
@@ -66,18 +134,54 @@ export default function Index() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background p-6">
-        <div className="text-center max-w-md animate-fade-in">
-          <AlertTriangle className="h-10 w-10 text-destructive mx-auto mb-3" />
-          <h2 className="text-base font-bold text-foreground mb-1">
-            Couldn't load dashboard data
-          </h2>
-          <p className="text-sm text-muted-foreground mb-4">{error}</p>
-          <Button onClick={reload} size="sm">
-            <RefreshCw className="h-3.5 w-3.5 mr-1.5" />
-            Try again
-          </Button>
-        </div>
+      <div className="min-h-screen bg-background flex flex-col">
+        <AppHeader />
+
+        <main
+          id="main-content"
+          className="flex flex-1 items-center justify-center p-6"
+        >
+          <div className="max-w-lg rounded-2xl border border-border bg-card p-6 text-center shadow-sm animate-fade-in">
+            <AlertTriangle className="mx-auto mb-3 h-10 w-10 text-destructive" />
+            <h1 className="mb-2 text-lg font-bold text-foreground">
+              Could not load dashboard data
+            </h1>
+            <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+              The dashboard could not load one or more required static data files from the
+              <span className="mx-1 rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+                /data
+              </span>
+              directory. Please refresh the page. If the problem continues, check that
+              <span className="mx-1 rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+                facilities.json
+              </span>
+              ,
+              <span className="mx-1 rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+                districts_pop.json
+              </span>
+              , and
+              <span className="mx-1 rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
+                district.geojson
+              </span>
+              are available in the public data folder.
+            </p>
+
+            <p className="mb-5 rounded-lg bg-muted px-3 py-2 text-left font-mono text-xs text-muted-foreground">
+              {error}
+            </p>
+
+            <div className="flex flex-col justify-center gap-2 sm:flex-row">
+              <Button onClick={reload} size="sm">
+                <RefreshCw className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
+                Try again
+              </Button>
+
+              <Button variant="outline" size="sm" asChild>
+                <Link to="/data-methods">Open Data & Methods</Link>
+              </Button>
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
@@ -103,6 +207,7 @@ export default function Index() {
 
         {activeTab !== 'report' && (
           <aside
+            aria-label="Dashboard filters"
             className={`bg-card border-r border-border transition-all duration-300 flex-shrink-0 ${
               isMobile
                 ? `fixed top-[52px] bottom-0 left-0 z-50 w-[85%] max-w-[320px] shadow-xl ${
@@ -113,7 +218,11 @@ export default function Index() {
                 : 'w-0 overflow-hidden'
             }`}
           >
-            <div className={`${isMobile ? 'h-full' : 'h-[calc(100vh-52px)] sticky top-[52px]'} overflow-hidden`}>
+            <div
+              className={`${
+                isMobile ? 'h-full' : 'h-[calc(100vh-52px)] sticky top-[52px]'
+              } overflow-hidden`}
+            >
               <FilterPanel
                 filters={filters}
                 updateFilter={updateFilter}
@@ -140,33 +249,43 @@ export default function Index() {
           </aside>
         )}
 
-        <main className="flex-1 min-w-0">
+        <main id="main-content" className="flex-1 min-w-0">
           <div className={activeTab === 'report' ? '' : 'p-3 md:p-4 space-y-4'}>
-            {activeTab !== 'report' && <KPICards districts={activeDistricts} facilities={activeFacilities} />}
+            {activeTab !== 'report' && <DashboardNotice />}
+
+            {activeTab !== 'report' && (
+              <KPICards districts={activeDistricts} facilities={activeFacilities} />
+            )}
 
             {activeTab !== 'report' && activeDistricts.length >= 2 && (
               <DistrictSummaryCards districts={activeDistricts} />
             )}
 
             {activeTab === 'map' && (
-              <DistrictMap
-                geojson={geojson}
-                districts={activeDistricts}
-                facilities={activeFacilities}
-                mapDisplay={mapDisplay}
-                updateMapDisplay={updateMapDisplay}
-                selectedDistrict={selectedDistrict}
-                onDistrictClick={setSelectedDistrict}
-              />
+              activeDistricts.length === 0 || activeFacilities.length === 0 ? (
+                <NoDataState
+                  resetFilters={resetFilters}
+                  message="No districts or facilities match the current filter selection. Reset filters or broaden the geography/facility criteria."
+                />
+              ) : (
+                <DistrictMap
+                  geojson={geojson}
+                  districts={activeDistricts}
+                  facilities={activeFacilities}
+                  mapDisplay={mapDisplay}
+                  updateMapDisplay={updateMapDisplay}
+                  selectedDistrict={selectedDistrict}
+                  onDistrictClick={setSelectedDistrict}
+                />
+              )
             )}
 
             {activeTab === 'insights' && (
               activeDistricts.length === 0 ? (
-                <div className="dashboard-panel p-10 text-center">
-                  <p className="text-sm text-muted-foreground">
-                    No data matches the current filters. Adjust filters to see insights.
-                  </p>
-                </div>
+                <NoDataState
+                  resetFilters={resetFilters}
+                  message="No district-level denominator data match the current filters. Adjust filters to see insights."
+                />
               ) : (
                 <InsightsTab districts={activeDistricts} facilities={activeFacilities} />
               )
@@ -177,7 +296,9 @@ export default function Index() {
             )}
           </div>
 
-          {activeTab === 'report' && <ReportTab districts={districts} facilities={facilities} />}
+          {activeTab === 'report' && (
+            <ReportTab districts={districts} facilities={facilities} />
+          )}
         </main>
       </div>
     </div>
