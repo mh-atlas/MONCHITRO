@@ -11,43 +11,12 @@ import DataTable from '@/components/dashboard/DataTable';
 import DistrictSummaryCards from '@/components/dashboard/DistrictSummaryCards';
 import ReportTab from '@/components/dashboard/ReportTab';
 import ActiveFilterChips from '@/components/dashboard/ActiveFilterChips';
-import { AlertTriangle, RefreshCw, Info, Database, ShieldAlert } from 'lucide-react';
+import { AlertTriangle, RefreshCw, Database } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import LoadingScreen from '@/components/LoadingScreen';
 import AppHeader from '@/components/dashboard/AppHeader';
 
 const VALID_TABS: TabView[] = ['map', 'insights', 'table', 'report'];
-
-function DashboardNotice() {
-  return (
-    <section
-      aria-label="Dashboard data notice"
-      className="rounded-2xl border border-amber-200 bg-amber-50/80 px-4 py-3 text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/25 dark:text-amber-100"
-    >
-      <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-        <div className="flex gap-2">
-          <ShieldAlert className="mt-0.5 h-4 w-4 flex-shrink-0" aria-hidden="true" />
-          <div>
-            <p className="text-sm font-semibold">Directory-derived planning dataset</p>
-            <p className="mt-1 text-xs leading-relaxed">
-              This dashboard visualizes 371 indexed facilities from a service directory. It is not
-              a verified national census. Districts with zero indexed facilities may represent true
-              service gaps, directory coverage gaps, or both.
-            </p>
-          </div>
-        </div>
-
-        <Link
-          to="/data-methods"
-          className="inline-flex items-center justify-center rounded-lg border border-amber-300 bg-white/50 px-3 py-1.5 text-xs font-medium text-amber-950 transition-colors hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100"
-        >
-          <Info className="mr-1.5 h-3.5 w-3.5" aria-hidden="true" />
-          Data & Methods
-        </Link>
-      </div>
-    </section>
-  );
-}
 
 function NoDataState({
   resetFilters,
@@ -61,12 +30,18 @@ function NoDataState({
       <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
         <Database className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
       </div>
+
       <h2 className="text-base font-semibold text-foreground">No matching data</h2>
-      <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{message}</p>
+
+      <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+        {message}
+      </p>
+
       <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
         <Button size="sm" onClick={resetFilters}>
           Reset filters
         </Button>
+
         <Button size="sm" variant="outline" asChild>
           <Link to="/data-methods">Read data limitations</Link>
         </Button>
@@ -97,6 +72,7 @@ export default function Index() {
   const [activeTab, setActiveTab] = useState<TabView>(
     VALID_TABS.includes(initialTab) ? initialTab : 'map'
   );
+
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -109,14 +85,18 @@ export default function Index() {
 
     check();
     window.addEventListener('resize', check);
+
     return () => window.removeEventListener('resize', check);
   }, []);
 
   useEffect(() => {
     const next = new URLSearchParams(searchParams);
 
-    if (activeTab === 'map') next.delete('tab');
-    else next.set('tab', activeTab);
+    if (activeTab === 'map') {
+      next.delete('tab');
+    } else {
+      next.set('tab', activeTab);
+    }
 
     setSearchParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,9 +104,11 @@ export default function Index() {
 
   const districtNameLookup = useMemo(() => {
     const m: Record<string, string> = {};
+
     districts.forEach((d) => {
       if (d.DIS_CODE) m[d.DIS_CODE] = d.DIS_NAME;
     });
+
     return m;
   }, [districts]);
 
@@ -143,9 +125,11 @@ export default function Index() {
         >
           <div className="max-w-lg rounded-2xl border border-border bg-card p-6 text-center shadow-sm animate-fade-in">
             <AlertTriangle className="mx-auto mb-3 h-10 w-10 text-destructive" />
+
             <h1 className="mb-2 text-lg font-bold text-foreground">
               Could not load dashboard data
             </h1>
+
             <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
               The dashboard could not load one or more required static data files from the
               <span className="mx-1 rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
@@ -251,8 +235,6 @@ export default function Index() {
 
         <main id="main-content" className="flex-1 min-w-0">
           <div className={activeTab === 'report' ? '' : 'p-3 md:p-4 space-y-4'}>
-            {activeTab !== 'report' && <DashboardNotice />}
-
             {activeTab !== 'report' && (
               <KPICards districts={activeDistricts} facilities={activeFacilities} />
             )}
@@ -261,8 +243,8 @@ export default function Index() {
               <DistrictSummaryCards districts={activeDistricts} />
             )}
 
-            {activeTab === 'map' && (
-              activeDistricts.length === 0 || activeFacilities.length === 0 ? (
+            {activeTab === 'map' &&
+              (activeDistricts.length === 0 || activeFacilities.length === 0 ? (
                 <NoDataState
                   resetFilters={resetFilters}
                   message="No districts or facilities match the current filter selection. Reset filters or broaden the geography/facility criteria."
@@ -277,19 +259,17 @@ export default function Index() {
                   selectedDistrict={selectedDistrict}
                   onDistrictClick={setSelectedDistrict}
                 />
-              )
-            )}
+              ))}
 
-            {activeTab === 'insights' && (
-              activeDistricts.length === 0 ? (
+            {activeTab === 'insights' &&
+              (activeDistricts.length === 0 ? (
                 <NoDataState
                   resetFilters={resetFilters}
                   message="No district-level denominator data match the current filters. Adjust filters to see insights."
                 />
               ) : (
                 <InsightsTab districts={activeDistricts} facilities={activeFacilities} />
-              )
-            )}
+              ))}
 
             {activeTab === 'table' && (
               <DataTable districts={activeDistricts} facilities={activeFacilities} />
