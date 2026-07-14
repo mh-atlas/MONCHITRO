@@ -47,7 +47,7 @@ export default function LoadingScreen() {
         {/* Text */}
         <div>
           <p className="text-sm font-semibold tracking-wide text-foreground">
-            Preparing Mental Health Atlas
+            Preparing MONCHITRO
           </p>
 
           <p className="mx-auto mt-2 max-w-xs text-xs leading-relaxed text-muted-foreground">
