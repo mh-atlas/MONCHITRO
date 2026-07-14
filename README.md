@@ -1,47 +1,54 @@
-# Mental Health Atlas BD
+# MONCHITRO
 
-**Mental Health Atlas BD** is an open-source, browser-based interactive GIS dashboard for mental health facility mapping in Bangladesh.
+**MONCHITRO** is an open-source, browser-based interactive GIS dashboard for mapping and exploring mental health service facilities across Bangladesh.
 
-Live dashboard: https://mh-atlas-bd.vercel.app/  
-Source code: https://github.com/mh-atlas/mental-health-atlas-bd  
-Version: v1.0  
-Data last updated: 12 June 2026  
+Live dashboard: https://monchitro.vercel.app/
+Source code: https://github.com/mh-atlas/MONCHITRO
+Version: v1.0
+Data last updated: 12 June 2026
 License: MIT
 
 ---
 
 ## Overview
 
-Mental Health Atlas BD visualizes indexed mental health service facilities across Bangladesh using an interactive geospatial dashboard. The platform is designed to support public health planning, service mapping, research, referral planning, and equity-oriented decision-making.
+MONCHITRO visualizes indexed mental health service facilities across Bangladesh through an interactive geospatial dashboard.
 
-The current v1.0 dashboard visualizes:
+The application is designed to support:
 
-- 371 indexed mental health service facilities
-- 44 of 64 districts with at least one indexed facility
-- All 8 administrative divisions of Bangladesh
-- District-level population and socioeconomic denominator data for all 64 districts
-- District boundary polygons for national-scope choropleth mapping
+* Public health planning
+* Mental health service mapping
+* Geographic coverage assessment
+* Referral planning
+* Facility distribution analysis
+* District-level equity analysis
+* Research and policy communication
+* Identification of potential service gaps requiring further validation
 
-The dashboard is intended as a planning and research-support tool. It is **not** a verified national census of all mental health services in Bangladesh and should not be used as an emergency referral system.
+The current v1.0 dashboard includes:
+
+* 371 indexed mental health service facilities
+* 44 of 64 districts with at least one indexed facility
+* All 8 administrative divisions of Bangladesh
+* District-level population and socioeconomic denominator data for all 64 districts
+* District boundary polygons for national-level choropleth mapping
+
+MONCHITRO is a planning and decision-support application. It is not a verified national census of all mental health services and should not be used as an emergency referral system.
 
 ---
 
-## Why This Project Matters
+## Purpose
 
-Mental health service information is often difficult to explore spatially. Planners, researchers, nongovernmental organizations, and service providers may need to understand where services are available, which districts appear underserved, and how service availability relates to population and socioeconomic indicators.
+Mental health service information can be difficult to explore geographically. Planners, researchers, nongovernmental organizations, government agencies, and service providers may need to understand:
 
-Mental Health Atlas BD addresses this gap by making facility-level service information easier to query, visualize, filter, and export through a public web dashboard.
+* Where mental health services are available
+* Which districts appear underserved
+* How facilities are distributed across administrative areas
+* How service availability relates to population
+* Whether services are government, private, or nongovernmental
+* Which apparent service gaps require field-level verification
 
-The dashboard can support:
-
-- Mental health service planning
-- Facility distribution analysis
-- Geographic coverage assessment
-- Public and private service comparison
-- District-level equity analysis
-- Referral planning
-- Research and policy communication
-- Identification of potential service gaps requiring validation
+MONCHITRO makes facility-level information easier to search, filter, visualize, compare, and export through a public web dashboard.
 
 ---
 
@@ -49,110 +56,122 @@ The dashboard can support:
 
 ### Interactive Map
 
-- Bangladesh national district map
-- Facility marker clusters
-- Facility density heatmap
-- Bubble overlay
-- District labels
-- Choropleth indicators
-- Multiple basemap options
-- District information popups
-- Fullscreen map view
-- Map snapshot support
+The interactive map includes:
+
+* Bangladesh district boundaries
+* Facility marker clusters
+* Facility density heatmap
+* District bubble overlay
+* District labels
+* Choropleth indicators
+* Multiple basemap options
+* District information popups
+* Facility information popups
+* Fullscreen map view
+* Map snapshot support
 
 ### Choropleth Indicators
 
 The map supports district-level visualization of:
 
-- Facility count
-- Population
-- Facilities per 100,000 population
-- Population per facility
-- Poverty index
-- Literacy rate
-- Urban percentage
+* Facility count
+* Population
+* Facilities per 100,000 population
+* Population per facility
+* Poverty index
+* Literacy rate
+* Urban population percentage
 
 ### Filters
 
-The dashboard includes user-facing filters for:
+Users can filter the dashboard by:
 
-- Facility search
-- Division
-- District
-- Ownership
-- Facility type
-- Free services
-- Appointment requirement
-- Walk-in availability
+* Facility name
+* Division
+* District
+* Ownership
+* Facility type
+* Free service availability
+* Appointment requirements
+* Walk-in availability
 
-Active filters are shown as removable chips.
+Active filters are displayed as removable filter chips.
 
 ### Insights Tab
 
-The Insights tab provides summary visualizations for:
+The Insights tab provides visual summaries of:
 
-- Facilities by district
-- Facilities per 100,000 population
-- Coverage gaps
-- Best-served districts
-- Division-level comparison
-- Ownership breakdown
-- Government versus private distribution
-- Cost bracket distribution
-- Facility type distribution
-- District comparison
+* Facilities by district
+* Facilities per 100,000 population
+* District coverage gaps
+* Best-served districts
+* Division-level comparisons
+* Ownership distribution
+* Government and private facility distribution
+* Cost bracket distribution
+* Facility type distribution
+* District comparisons
 
 ### Data Table Tab
 
-The Data table tab provides:
+The Data Table tab provides:
 
-- Searchable facility records
-- Searchable district records
-- Sortable columns
-- Pagination
-- CSV export for filtered facility data
-- CSV export for filtered district summary data
+* Searchable facility records
+* Searchable district records
+* Sortable columns
+* Pagination
+* CSV export of filtered facility data
+* CSV export of filtered district summary data
 
-Exported data are directory-derived and should be validated against official registries before formal service-coverage decisions.
+Exported data are derived from the dashboard directory and should be validated against official registries before being used for formal service-coverage decisions.
 
 ### Report Tab
 
-The Report tab allows users to generate a structured narrative report based on selected geographic scope and selected report sections. It supports PDF download through client-side report generation.
+The Report tab allows users to generate a structured report based on:
+
+* Selected geographic scope
+* Active dashboard filters
+* Selected report sections
+* Current facility and district indicators
+
+Reports can be downloaded as PDF files through client-side report generation.
 
 ### Data & Methods Page
 
-The dashboard includes a dedicated Data & Methods page documenting:
+The Data & Methods page documents:
 
-- Dashboard scope
-- Data sources
-- Denominator coverage
-- Calculated indicators
-- Data dictionary entries
-- Interpretation limitations
-- Suggested citation text
+* Application scope
+* Data sources
+* Data coverage
+* Denominator coverage
+* Calculated indicators
+* Data dictionary entries
+* Interpretation guidance
+* Application limitations
 
-### Feedback Route
+### Feedback Page
 
-The dashboard includes an informal feedback route where users may submit:
+The application includes a feedback page where users can provide:
 
-- User role
-- Ease-of-use rating
-- Use case
-- Suggested improvements
+* User role
+* Ease-of-use rating
+* Intended use
+* Suggested improvements
+* General comments
 
-The feedback route is for improvement tracking only. It is not a formal usability study, System Usability Scale assessment, or representative evaluation.
+Feedback is used for application improvement and issue tracking.
 
 ---
 
 ## Data Sources
 
-The dashboard uses three main data inputs.
+MONCHITRO uses three main data inputs.
 
-| Dataset | Description |
-|---|---|
-| Facility records | Indexed mental health service facilities derived from the ADD International Bangladesh Mental Health Service Directory |
-| District denominator data | Bangladesh Bureau of Statistics Census 2022 district-level population and socioeconomic indicators |
-| District boundaries | GADM Level 2 Bangladesh district boundary polygons |
+| Dataset                   | Description                                                                                                            |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Facility records          | Indexed mental health service facilities derived from the ADD International Bangladesh Mental Health Service Directory |
+| District denominator data | Bangladesh Bureau of Statistics Census 2022 district-level population and socioeconomic indicators                     |
+| District boundaries       | GADM Level 2 Bangladesh district boundary polygons                                                                     |
 
 Runtime data files are loaded from the `/data` directory:
 
@@ -166,70 +185,83 @@ Runtime data files are loaded from the `/data` directory:
 
 ## Data Coverage
 
-| Indicator | Current value |
-|---|---:|
-| Indexed facilities | 371 |
-| Districts with indexed facilities | 44 of 64 |
-| Districts with denominator data | 64 of 64 |
-| Divisions represented | 8 of 8 |
-| Coordinate completeness | 371 of 371 |
-| Website completeness | 141 of 371 |
-| Email completeness | 205 of 371 |
-| Mobile contact completeness | 332 of 371 |
-| Service days completeness | 246 of 371 |
-| Visiting hours completeness | 265 of 371 |
-| Cost completeness | 226 of 371 |
+| Indicator                         | Current value |
+| --------------------------------- | ------------: |
+| Indexed facilities                |           371 |
+| Districts with indexed facilities |      44 of 64 |
+| Districts with denominator data   |      64 of 64 |
+| Divisions represented             |        8 of 8 |
+| Coordinate completeness           |    371 of 371 |
+| Website completeness              |    141 of 371 |
+| Email completeness                |    205 of 371 |
+| Mobile contact completeness       |    332 of 371 |
+| Service days completeness         |    246 of 371 |
+| Visiting hours completeness       |    265 of 371 |
+| Cost completeness                 |    226 of 371 |
 
 ---
 
-## Important Data Limitation
+## Data Limitations
 
-This project uses a **directory-derived planning dataset**. It should not be interpreted as a complete, verified government census of all mental health facilities in Bangladesh.
+MONCHITRO uses a directory-derived planning dataset. It should not be interpreted as a complete or verified government census of all mental health facilities in Bangladesh.
 
-Districts with zero indexed facilities may represent:
+A district with zero indexed facilities may indicate:
 
-1. A true service gap,
-2. A directory coverage gap, or
-3. Both.
+1. A genuine service gap
+2. Incomplete directory coverage
+3. An unverified or outdated facility record
+4. A combination of service and data gaps
 
-Researchers and planners should validate dashboard findings against official DGHS, MOHFW, or local administrative records before drawing conclusions about absolute service availability.
+Dashboard findings should be validated against official DGHS, Ministry of Health and Family Welfare, local administrative, or facility-level records before making formal decisions about absolute service availability.
+
+Facility availability, service schedules, contact details, costs, ownership, and appointment requirements may change over time.
 
 ---
 
 ## Technology Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend framework | React |
-| Language | TypeScript |
-| Build tool | Vite |
-| Mapping | Leaflet |
-| Marker clustering | leaflet.markercluster |
-| Heatmap | leaflet.heat |
-| Charts | Recharts |
-| UI components | Shadcn/ui and Radix UI |
-| Styling | Tailwind CSS |
-| Routing | React Router |
-| PDF export | html2pdf.js |
-| Image export | html-to-image |
-| Testing | Vitest |
+| Layer              | Technology             |
+| ------------------ | ---------------------- |
+| Frontend framework | React                  |
+| Language           | TypeScript             |
+| Build tool         | Vite                   |
+| Mapping            | Leaflet                |
+| Marker clustering  | leaflet.markercluster  |
+| Heatmap            | leaflet.heat           |
+| Charts             | Recharts               |
+| UI components      | Shadcn/ui and Radix UI |
+| Styling            | Tailwind CSS           |
+| Routing            | React Router           |
+| PDF export         | html2pdf.js            |
+| Image export       | html-to-image          |
+| Testing            | Vitest                 |
 
-The dashboard is implemented as a static single-page application. Core dashboard use does not require an application backend, database, login system, or server-side API.
+MONCHITRO is implemented as a static single-page application.
+
+The main dashboard does not require:
+
+* User registration
+* User login
+* A central application database
+* A server-side application API
+* Patient-level health data
 
 ---
 
 ## Project Structure
 
 ```text
-mental-health-atlas-bd/
+MONCHITRO/
 ├── public/
 │   └── data/
 │       ├── facilities.json
 │       ├── districts_pop.json
 │       └── district.geojson
 ├── src/
+│   ├── assets/
 │   ├── components/
 │   ├── hooks/
+│   ├── lib/
 │   ├── pages/
 │   ├── types/
 │   └── utils/
@@ -253,7 +285,7 @@ mental-health-atlas-bd/
 
 Install Node.js and npm.
 
-Check installation:
+Check the installed versions:
 
 ```bash
 node -v
@@ -274,16 +306,16 @@ npm: 9 or later
 Clone the repository:
 
 ```bash
-git clone https://github.com/mh-atlas/mental-health-atlas-bd.git
+git clone https://github.com/mh-atlas/MONCHITRO.git
 ```
 
 Go to the project directory:
 
 ```bash
-cd mental-health-atlas-bd
+cd MONCHITRO
 ```
 
-Install dependencies:
+Install the project dependencies:
 
 ```bash
 npm install
@@ -295,15 +327,49 @@ Run the development server:
 npm run dev
 ```
 
-Open the local development URL shown in the terminal.
+Open the local development address displayed in the terminal.
 
-Common local URL:
+The default local address may be:
 
 ```text
 http://localhost:8080
 ```
 
-Depending on your environment, Vite may also use another local port.
+Vite may use another available port if the configured port is unavailable.
+
+---
+
+## Available Commands
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+### Create a production build
+
+```bash
+npm run build
+```
+
+### Preview the production build
+
+```bash
+npm run preview
+```
+
+### Run linting
+
+```bash
+npm run lint
+```
+
+### Run tests
+
+```bash
+npm run test
+```
 
 ---
 
@@ -313,6 +379,12 @@ Create a production build:
 
 ```bash
 npm run build
+```
+
+The compiled application will be generated in:
+
+```text
+dist/
 ```
 
 Preview the production build locally:
@@ -325,50 +397,71 @@ npm run preview
 
 ## Deployment
 
-The project can be deployed as static web files using platforms such as:
+MONCHITRO can be deployed as a static web application using:
 
-- Vercel
-- Netlify
-- GitHub Pages
-- Cloudflare Pages
-- Any static web server
+* Vercel
+* Netlify
+* GitHub Pages
+* Cloudflare Pages
+* Any compatible static web server
 
 The current public deployment is available at:
 
 ```text
-https://mh-atlas-bd.vercel.app/
+https://monchitro.vercel.app/
+```
+
+The source code is available at:
+
+```text
+https://github.com/mh-atlas/MONCHITRO
 ```
 
 ---
 
 ## Data Update Workflow
 
-The current dashboard loads static JSON and GeoJSON files. Updating the dataset requires replacing or regenerating the files in the `/public/data/` or deployed `/data/` directory, then rebuilding and redeploying the site.
+MONCHITRO loads static JSON and GeoJSON files from the public data directory.
 
-Typical workflow:
+To update dashboard data:
 
-1. Update source facility or district data.
+1. Update the source facility or district datasets.
 2. Clean and standardize field names.
-3. Validate district codes and coordinates.
-4. Export updated JSON/GeoJSON files.
-5. Replace files in the data directory.
-6. Run build.
-7. Redeploy the dashboard.
+3. Validate division and district names.
+4. Validate district codes.
+5. Validate facility coordinates.
+6. Check missing and duplicate records.
+7. Regenerate the required JSON or GeoJSON files.
+8. Replace the files in `public/data/`.
+9. Run the production build.
+10. Review the dashboard outputs.
+11. Redeploy the application.
 
-Future versions may include an authenticated administrative update mechanism.
+The main runtime files are:
+
+```text
+public/data/facilities.json
+public/data/districts_pop.json
+public/data/district.geojson
+```
+
+Future versions may include a protected administrative data-update workflow.
 
 ---
 
 ## Privacy and Security
 
-This repository should not include sensitive, private, or confidential data.
+This repository should not contain confidential, restricted, or sensitive information.
 
-Do not upload:
+Do not upload or commit:
 
 ```text
 .env
+.env.local
 API keys
+access tokens
 passwords
+private keys
 private datasets
 patient-level health data
 personally identifiable information
@@ -376,67 +469,117 @@ node_modules/
 dist/
 ```
 
-The current dashboard does not use patient-level data, personal health information, or clinical records.
+The current dashboard does not use:
+
+* Patient-level records
+* Clinical case records
+* Personal health information
+* User accounts
+* Authentication credentials
+* Payment information
+
+Only facility information intended for public display should be included in the deployed data directory.
 
 ---
 
-## Research Use
+## Responsible Use
 
-This repository supports the manuscript:
+MONCHITRO should be used as a planning, exploration, and decision-support application.
 
-**Mental Health Atlas BD: Development of an Open-Source Interactive GIS Dashboard for National-Scope Mental Health Facility Mapping in Bangladesh**
+Users should not rely exclusively on the dashboard for:
 
-Suggested citation text before formal publication:
+* Emergency mental health referrals
+* Clinical decision-making
+* Confirmation that a facility is currently operating
+* Confirmation of service availability
+* Confirmation of visiting hours
+* Confirmation of treatment costs
+* Confirmation of appointment requirements
+* Definitive conclusions about district-level service absence
 
-```text
-Mental Health Atlas BD [dashboard]. Bangladesh mental health facility mapping dashboard. Version v1.0. Data last updated 12 June 2026. Available from: https://mh-atlas-bd.vercel.app/
-```
+Facility information should be independently verified before referral, travel, programme planning, or formal reporting.
 
-Suggested source-code citation:
+---
 
-```text
-Mental Health Atlas BD contributors. Mental Health Atlas BD [source code]. GitHub; 2026. Available from: https://github.com/mh-atlas/mental-health-atlas-bd
-```
+## Accessibility
 
-Please update citation details after manuscript publication.
+The application aims to support accessible use through:
+
+* Responsive layouts
+* Keyboard-accessible interface components
+* Visible focus states
+* Semantic page structure
+* Descriptive labels
+* Readable tables and charts
+* Alternative text for meaningful images
+* Accessible map and loading-state descriptions
+
+Accessibility testing and improvements will continue in future versions.
+
+---
+
+## Browser Support
+
+MONCHITRO is intended for current versions of:
+
+* Google Chrome
+* Microsoft Edge
+* Mozilla Firefox
+* Safari
+
+JavaScript must be enabled to use the interactive dashboard.
+
+For the best experience, use a modern desktop or mobile browser with an active internet connection.
 
 ---
 
 ## License
 
-This project is released under the MIT License. See the `LICENSE` file for details.
+MONCHITRO is released under the MIT License.
+
+See the `LICENSE` file for the complete licence terms.
 
 ---
 
-## Contributors
+## Contact and Issue Reporting
 
-Mental Health Atlas BD contributors.
-
-For manuscript submission, author names, affiliations, ORCID IDs, and CRediT contribution roles should be completed separately according to the target journal requirements.
-
----
-
-## Contact
-
-For questions, collaboration, or issue reporting, please use the GitHub repository issue tracker:
+For technical issues, data corrections, feature requests, or application feedback, use the GitHub issue tracker:
 
 ```text
-https://github.com/mh-atlas/mental-health-atlas-bd/issues
+https://github.com/mh-atlas/MONCHITRO/issues
 ```
+
+When reporting an issue, include:
+
+* A clear description of the problem
+* The affected page or dashboard section
+* Steps to reproduce the issue
+* Browser and device information
+* Screenshots where appropriate
+* Suggested data corrections, where applicable
+
+Do not include sensitive or patient-level information in issue reports.
 
 ---
 
-## Repository Status
+## Application Status
 
-Current status: v1.0 public dashboard.
+Current status:
 
-Planned future improvements may include:
+```text
+Version v1.0 public dashboard
+```
 
-- Authenticated data update workflow
-- Formal usability evaluation
-- Usage and reach analytics
-- Additional facility validation against official registries
-- Improved accessibility testing
-- Expanded data documentation
-- Additional equity and accessibility indicators
-- Replication template for other LMIC mental health facility mapping projects
+Planned improvements may include:
+
+* Protected data-update workflows
+* Additional facility validation
+* Improved security controls
+* Expanded accessibility testing
+* Improved mobile usability
+* Additional data documentation
+* Additional service-accessibility indicators
+* Improved export functionality
+* Performance optimization
+* Formal application usability testing
+* Templates for adapting the dashboard to other service-mapping applications
