@@ -245,8 +245,8 @@ export default function ReportTab({ districts, facilities }: ReportTabProps) {
   useEffect(() => {
     setReportTitle(
       scopeLabel === 'All Bangladesh'
-        ? 'Mental Health Facility System — Bangladesh: National Overview'
-        : `Mental Health Facility System — ${scopeLabel}`
+        ? 'MONCHITRO — Bangladesh: National Overview'
+        : `MONCHITRO — ${scopeLabel}`
     );
   }, [scopeLabel]);
 
@@ -539,7 +539,7 @@ export default function ReportTab({ districts, facilities }: ReportTabProps) {
 
               {/* Footer */}
               <div style={{ borderTop: '1px solid #e2e8f0', marginTop: 36, paddingTop: 14, display: 'flex', justifyContent: 'space-between', fontSize: 10, color: '#94a3b8', fontFamily: 'Arial, sans-serif' }}>
-                <span>Mental Health Facility Explorer · Bangladesh</span>
+                <span>MONCHITRO · Bangladesh</span>
                 <span>Generated {today}</span>
               </div>
             </div>{/* /p-10 */}
