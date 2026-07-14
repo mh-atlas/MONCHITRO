@@ -228,7 +228,7 @@ export default function DataMethods() {
           <SectionCard id="overview" icon={Info} title="Dashboard purpose and scope">
             <div className="space-y-3 text-sm leading-relaxed text-muted-foreground">
               <p>
-                Mental Health Atlas BD is an open-source, browser-based interactive GIS
+                MONCHITRO is an open-source, browser-based interactive GIS
                 dashboard for national-scope mental health facility mapping in Bangladesh.
                 It supports facility lookup, district-level service coverage comparison,
                 equity-oriented planning, tabular export, and structured report generation.
@@ -533,7 +533,7 @@ export default function DataMethods() {
               </p>
 
               <div className="rounded-xl border border-border bg-muted/40 p-3 font-mono text-xs text-foreground">
-                Mental Health Atlas BD [dashboard]. Bangladesh mental health facility mapping
+                MONCHITRO [dashboard]. Bangladesh mental health facility mapping
                 dashboard. Version {DASHBOARD_VERSION}. Data last updated {DATA_LAST_UPDATED}.
               </div>
 
