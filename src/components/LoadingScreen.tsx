@@ -85,7 +85,7 @@ export default function LoadingScreen() {
         </div>
 
         <span className="sr-only">
-          Loading Mental Health Atlas dashboard data. Please wait.
+          Loading MONCHITRO dashboard data. Please wait.
         </span>
       </div>
 
