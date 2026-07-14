@@ -105,7 +105,7 @@ export default function AppHeader({
 
         <div className="min-w-0 flex-shrink-0">
           <h1 className="truncate text-sm font-bold leading-tight text-foreground md:text-base">
-            Mental Health Atlas
+            MONCHITRO
           </h1>
 
           <p className="hidden truncate text-[11px] text-muted-foreground sm:block md:text-xs">
