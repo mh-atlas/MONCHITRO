@@ -54,7 +54,7 @@ export default function Feedback() {
       rating,
       useCase,
       improvement,
-      source: 'Mental Health Atlas BD feedback route',
+      source: 'MONCHITRO feedback route',
     };
 
     try {
@@ -65,10 +65,10 @@ export default function Feedback() {
       });
 
       try {
-        const raw = localStorage.getItem('mhfe_feedback');
+        const raw = localStorage.getItem('monchitro_feedback_v1');
         const list = Array.isArray(JSON.parse(raw ?? '[]')) ? JSON.parse(raw ?? '[]') : [];
         list.push(payload);
-        localStorage.setItem('mhfe_feedback', JSON.stringify(list));
+        localStorage.setItem('monchitro_feedback_v1', JSON.stringify(list));
       } catch {
         // Ignore local backup failure.
       }
