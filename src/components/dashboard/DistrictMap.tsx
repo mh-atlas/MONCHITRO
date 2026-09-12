@@ -186,7 +186,7 @@ export default function DistrictMap({
   const tileRef = useRef<L.TileLayer | null>(null);
   const lastSelectionRef = useRef<string | null>(null);
 
-  const [basemap, setBasemap] = useState<'light' | 'street' | 'satellite'>('light');
+  const [basemap, setBasemap] = useState<'light' | 'street' | 'satellite'>('street');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [legendOpen, setLegendOpen] = useState(true);
@@ -313,9 +313,9 @@ export default function DistrictMap({
       minZoom: 6,
     });
     L.control.zoom({ position: 'bottomright' }).addTo(map);
-    tileRef.current = L.tileLayer(TILE_LAYERS.light, {
-      attribution: '© OpenStreetMap © CARTO',
-    }).addTo(map);
+    tileRef.current = L.tileLayer(TILE_LAYERS.street, {
+  attribution: '© OpenStreetMap contributors',
+}).addTo(map);
     map.fitBounds(BANGLADESH_BOUNDS, { padding: [10, 10] });
     map.setZoom(BANGLADESH_ZOOM);
     mapRef.current = map;
