@@ -1,4 +1,4 @@
-import { useEffect, useRef, useMemo, useState, useCallback } from 'react';
+
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet.markercluster';
@@ -27,8 +27,10 @@ const BANGLADESH_BOUNDS: L.LatLngBoundsExpression = [
 ];
 const NO_DATA_FILL = '#9ca3af';
 
+const CARTO_API_KEY = 'cb1_3i1u_1_b458457f2d7303ab5872f2b5';
+
 const TILE_LAYERS: Record<'light' | 'street' | 'satellite', string> = {
-  light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+  light: `https://basemaps.cartocdn.com/rastertiles/light_all/{z}/{x}/{y}{r}.png?key=${CARTO_API_KEY}`,
   street: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
 };
@@ -314,7 +316,8 @@ export default function DistrictMap({
     });
     L.control.zoom({ position: 'bottomright' }).addTo(map);
     tileRef.current = L.tileLayer(TILE_LAYERS.light, {
-      attribution: '© OpenStreetMap © CARTO',
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+      maxZoom: 20,
     }).addTo(map);
     map.fitBounds(BANGLADESH_BOUNDS, { padding: [10, 10] });
     map.setZoom(BANGLADESH_ZOOM);
@@ -328,12 +331,23 @@ export default function DistrictMap({
   // Basemap swap
   useEffect(() => {
     if (!mapRef.current) return;
+
     if (tileRef.current) {
       mapRef.current.removeLayer(tileRef.current);
       tileRef.current = null;
     }
+
+    let attribution = '&copy; OpenStreetMap contributors';
+
+    if (basemap === 'light') {
+      attribution = '&copy; OpenStreetMap contributors &copy; CARTO';
+    } else if (basemap === 'satellite') {
+      attribution = 'Tiles &copy; Esri';
+    }
+
     tileRef.current = L.tileLayer(TILE_LAYERS[basemap], {
-      attribution: basemap === 'satellite' ? '© Esri' : '© OpenStreetMap',
+      attribution,
+      maxZoom: basemap === 'light' ? 20 : 19,
     }).addTo(mapRef.current);
   }, [basemap]);
 
